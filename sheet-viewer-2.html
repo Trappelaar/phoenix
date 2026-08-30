@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix JO8-groen — Takenschema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pitch: #0c3a63;
+    --pitch-deep: #072744;
+    --pitch-light: #17568e;
+    --flame: #ff7a1f;
+    --flame-dark: #d9490f;
+    --line: #eef3f8;
+    --ink: #0a1f30;
+    --muted: #7891a6;
+    --card: #ffffff;
+    --field-bg: #f2f5f8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--field-bg);
+    color: var(--ink);
+    padding-bottom: 60px;
+  }
+
+  /* ---- Header: pitch banner with center-line arc ---- */
+  .pitch-header {
+    background: linear-gradient(180deg, var(--pitch) 0%, var(--pitch-deep) 100%);
+    color: var(--line);
+    padding: 28px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pitch-header::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    width: 220px;
+    height: 220px;
+    border: 2px solid rgba(238,243,248,0.18);
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  .pitch-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: rgba(238,243,248,0.18);
+  }
+
+  .header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mark {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .club-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .club-name span {
+    color: var(--flame);
+  }
+
+  .subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(238,243,248,0.65);
+    margin-top: 2px;
+  }
+
+  .meta-row {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    margin-top: 18px;
+    font-size: 0.8rem;
+    color: rgba(238,243,248,0.75);
+  }
+
+  /* ---- Body ---- */
+  .wrap {
+    max-width: 1000px;
+    margin: -22px auto 0;
+    padding: 0 16px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ---- Next match card ---- */
+  .match-card {
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(7,39,68,0.1);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    border-left: 5px solid var(--flame);
+  }
+
+  .match-card .eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--flame-dark);
+    margin: 0 0 6px;
+  }
+
+  .match-card .match-date-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 10px;
+  }
+
+  .match-card .match-date {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--pitch-deep);
+    margin: 0;
+    text-transform: capitalize;
+  }
+
+  .match-card .pill {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .match-card .pill.thuis { background: var(--pitch); }
+  .match-card .pill.uit { background: var(--flame); }
+
+  .match-card .field-value.stacked > span {
+    display: block;
+  }
+
+  .match-card .match-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px 18px;
+  }
+
+  .match-card .field-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  .match-card .field-value {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .match-card .empty {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  input[type="search"] {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(7,39,68,0.12);
+    font-family: 'Inter', sans-serif;
+  }
+
+  input[type="search"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--flame);
+  }
+
+  button.refresh {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--flame);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(217,73,15,0.35);
+  }
+
+  button.refresh:hover {
+    background: var(--flame-dark);
+  }
+
+  .table-scroll {
+    background: var(--card);
+    border-radius: 10px;
+    overflow: auto;
+    max-height: 68vh;
+    box-shadow: 0 2px 12px rgba(7,39,68,0.1);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.88rem;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: var(--pitch);
+    color: var(--line);
+    text-align: left;
+    padding: 11px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  thead th:hover {
+    background: var(--pitch-light);
+  }
+
+  thead th .arrow {
+    font-size: 0.75em;
+    color: var(--flame);
+    margin-left: 4px;
+  }
+
+  tbody td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e6ebf0;
+    white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: #fff3ea;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .error {
+    background: #fdecea;
+    color: #b3261e;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .row-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    background: var(--pitch-deep);
+    color: var(--flame);
+    border-radius: 6px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="pitch-header">
+  <div class="header-inner">
+    <img class="mark" src="https://irp.cdn-website.com/03c81d27/dms3rep/multi/opt/Phoenix+logo+transparant-640w.png" alt="Phoenix logo">
+    <div>
+      <p class="club-name">Phoenix <span>JO8-groen</span></p>
+      <div class="subtitle">Takenschema</div>
+    </div>
+  </div>
+  <div class="meta-row" id="loadedAt"></div>
+</div>
+
+<div class="wrap">
+  <div class="match-card" id="matchCard">
+    <p class="eyebrow">Eerstvolgende wedstrijd</p>
+    <div class="state" style="padding:0;">Data laden…</div>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="filterInput" placeholder="Zoeken in tabel…" />
+    <button class="refresh" id="refreshBtn">Ververs</button>
+  </div>
+
+  <div id="content" class="table-scroll">
+    <div class="state">Data laden…</div>
+  </div>
+  <div class="row-count" id="rowCount"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+  // Vul hier de gepubliceerde CSV-link van de Google Sheet in
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEzjXJDy0qjSKPHywiRUDzht0i_2nQgDHcAQvwStveGfsvviH63Kz7pkSFh0A355_T2drTeeYoXYho/pub?gid=1522569448&single=true&output=csv";
+
+  let allRows = [];
+  let headers = [];
+  let sortState = { col: null, dir: 1 };
+
+  const contentEl = document.getElementById('content');
+  const loadedAtEl = document.getElementById('loadedAt');
+  const rowCountEl = document.getElementById('rowCount');
+  const filterInput = document.getElementById('filterInput');
+  const refreshBtn = document.getElementById('refreshBtn');
+  const matchCardEl = document.getElementById('matchCard');
+
+  function showState(html) {
+    contentEl.innerHTML = `<div class="state">${html}</div>`;
+  }
+
+  function showError(message) {
+    contentEl.innerHTML = `<div class="error"><strong>Kon de data niet laden.</strong><br>${message}</div>`;
+    rowCountEl.textContent = '';
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // ---- Datum-detectie ----
+  function findDateColumnIndex() {
+    let idx = headers.findIndex(h => /datum/i.test(h));
+    if (idx !== -1) return idx;
+    // fallback: eerste kolom waarvan de meeste waarden als datum te parsen zijn
+    for (let c = 0; c < headers.length; c++) {
+      const parsedCount = allRows.filter(r => parseDateFlexible(r[c]) !== null).length;
+      if (parsedCount > allRows.length * 0.5) return c;
+    }
+    return -1;
+  }
+
+  function parseDateFlexible(str) {
+    if (!str) return null;
+    str = str.trim();
+    let m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+    m = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})/);
+    if (m) {
+      let year = +m[3];
+      if (year < 100) year += 2000;
+      return new Date(year, +m[2] - 1, +m[1]);
+    }
+    return null;
+  }
+
+  function findColumnIndex(pattern) {
+    return headers.findIndex(h => pattern.test(h));
+  }
+
+  function parseTimeToMinutes(str) {
+    if (!str) return null;
+    const m = String(str).trim().match(/^(\d{1,2})[:.h](\d{2})/);
+    if (!m) return null;
+    return (+m[1]) * 60 + (+m[2]);
+  }
+
+  function minutesToTimeLabel(mins) {
+    const wrapped = ((mins % 1440) + 1440) % 1440;
+    const h = Math.floor(wrapped / 60);
+    const m = wrapped % 60;
+    return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  }
+
+  function renderMatchCard() {
+    const dateColIdx = findDateColumnIndex();
+
+    if (dateColIdx === -1) {
+      matchCardEl.innerHTML = `<p class="eyebrow">Eerstvolgende wedstrijd</p><div class="empty">Geen datumkolom gevonden in de sheet.</div>`;
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let candidates = allRows
+      .map(row => ({ row, date: parseDateFlexible(row[dateColIdx]) }))
+      .filter(c => c.date && c.date >= today)
+      .sort((a, b) => a.date - b.date);
+
+    if (!candidates.length) {
+      matchCardEl.innerHTML = `<p class="eyebrow">Eerstvolgende wedstrijd</p><div class="empty">Geen aankomende wedstrijd gevonden.</div>`;
+      return;
+    }
+
+    const next = candidates[0];
+    const dateLabel = next.date.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long' });
+
+    const tegenstanderIdx = findColumnIndex(/tegenstander/i);
+    const spelbegeleider1Idx = findColumnIndex(/spelbegeleider\s*1/i);
+    const spelbegeleider2Idx = findColumnIndex(/spelbegeleider\s*2/i);
+    const aanvangIdx = findColumnIndex(/aanvang/i);
+
+    // Thuis/uit uit de tegenstander-kolom halen, bv. "SV Kampong (thuis)"
+    let thuisUitPill = '';
+    if (tegenstanderIdx !== -1) {
+      const m = String(next.row[tegenstanderIdx] || '').match(/\(\s*(thuis|uit)\s*\)/i);
+      if (m) {
+        const label = m[1].toLowerCase();
+        thuisUitPill = `<span class="pill ${label}">${label === 'thuis' ? 'Thuis' : 'Uit'}</span>`;
+      }
+    }
+
+    let fieldsHtml = '';
+    let spelbegeleidersDone = false;
+    headers.forEach((h, i) => {
+      if (i === dateColIdx) return;
+      let val = next.row[i];
+
+      if (i === spelbegeleider1Idx || i === spelbegeleider2Idx) {
+        if (spelbegeleidersDone) return;
+        spelbegeleidersDone = true;
+        const names = [next.row[spelbegeleider1Idx], next.row[spelbegeleider2Idx]]
+          .filter(Boolean)
+          .map(n => n.trim())
+          .filter(Boolean);
+        if (!names.length) return;
+        const namesHtml = names.map(n => `<span>${escapeHtml(n)}</span>`).join('');
+        fieldsHtml += `<div><div class="field-label">Spelbegeleiders</div><div class="field-value stacked">${namesHtml}</div></div>`;
+        return;
+      }
+
+      if (!val) return;
+
+      if (i === tegenstanderIdx) {
+        // (thuis)/(uit) eruit halen, staat al als pil naast de datum
+        val = val.replace(/\(\s*(thuis|uit)\s*\)/i, '').trim();
+        fieldsHtml += `<div><div class="field-label">${escapeHtml(h)}</div><div class="field-value">${escapeHtml(val)}</div></div>`;
+        return;
+      }
+
+      fieldsHtml += `<div><div class="field-label">${escapeHtml(h)}</div><div class="field-value">${escapeHtml(val)}</div></div>`;
+
+      if (i === aanvangIdx) {
+        const mins = parseTimeToMinutes(val);
+        if (mins !== null) {
+          const verzamelLabel = minutesToTimeLabel(mins - 30);
+          fieldsHtml += `<div><div class="field-label">Verzameltijd</div><div class="field-value">${escapeHtml(verzamelLabel)}</div></div>`;
+        }
+      }
+    });
+
+    matchCardEl.innerHTML = `
+      <p class="eyebrow">Eerstvolgende wedstrijd</p>
+      <div class="match-date-row">
+        <p class="match-date">${escapeHtml(dateLabel)}</p>
+        ${thuisUitPill}
+      </div>
+      <div class="match-fields">${fieldsHtml}</div>
+    `;
+  }
+
+  function renderTable(rows) {
+    if (!rows.length) {
+      showState('Geen rijen gevonden.');
+      rowCountEl.textContent = '';
+      return;
+    }
+
+    let html = '<table><thead><tr>';
+    headers.forEach((h, i) => {
+      let arrow = '';
+      if (sortState.col === i) arrow = `<span class="arrow">${sortState.dir === 1 ? '▲' : '▼'}</span>`;
+      html += `<th data-col="${i}">${escapeHtml(h)}${arrow}</th>`;
+    });
+    html += '</tr></thead><tbody>';
+
+    rows.forEach(row => {
+      html += '<tr>';
+      headers.forEach((_, i) => {
+        html += `<td>${escapeHtml(row[i] ?? '')}</td>`;
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+
+    contentEl.innerHTML = html;
+    rowCountEl.textContent = `${rows.length} rij${rows.length === 1 ? '' : 'en'}`;
+
+    contentEl.querySelectorAll('thead th').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = parseInt(th.dataset.col, 10);
+        if (sortState.col === col) {
+          sortState.dir *= -1;
+        } else {
+          sortState = { col, dir: 1 };
+        }
+        applyFilterAndSort();
+      });
+    });
+  }
+
+  function applyFilterAndSort() {
+    const query = filterInput.value.trim().toLowerCase();
+    let rows = allRows;
+
+    if (query) {
+      rows = rows.filter(row =>
+        row.some(cell => String(cell).toLowerCase().includes(query))
+      );
+    }
+
+    if (sortState.col !== null) {
+      const col = sortState.col;
+      const dir = sortState.dir;
+      rows = [...rows].sort((a, b) => {
+        const av = a[col] ?? '';
+        const bv = b[col] ?? '';
+        const an = parseFloat(av.replace(',', '.'));
+        const bn = parseFloat(bv.replace(',', '.'));
+        if (!isNaN(an) && !isNaN(bn)) return (an - bn) * dir;
+        return String(av).localeCompare(String(bv), 'nl') * dir;
+      });
+    }
+
+    renderTable(rows);
+  }
+
+  function loadData() {
+    showState('Data laden…');
+    Papa.parse(SHEET_CSV_URL, {
+      download: true,
+      complete: (result) => {
+        const data = result.data.filter(r => r.some(cell => cell !== ''));
+        if (!data.length) {
+          showError('De sheet lijkt leeg te zijn.');
+          return;
+        }
+        headers = data[0];
+        allRows = data.slice(1);
+        sortState = { col: null, dir: 1 };
+        loadedAtEl.textContent = 'Geladen: ' + new Date().toLocaleString('nl-NL');
+        renderMatchCard();
+        applyFilterAndSort();
+      },
+      error: (err) => {
+        showError('Controleer of de sheet nog gepubliceerd is via Bestand → Delen → Publiceren op het web. (' + err.message + ')');
+      }
+    });
+  }
+
+  filterInput.addEventListener('input', applyFilterAndSort);
+  refreshBtn.addEventListener('click', loadData);
+
+  loadData();
+</script>
+</body>
+</html>
