@@ -439,6 +439,26 @@
     return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
   }
 
+  // ---- Derde auto: bij uitwedstrijden rijdt de ouder van de fruitdienst ----
+  function isUitwedstrijd(row, tegenstanderIdx) {
+    if (tegenstanderIdx === -1) return false;
+    return /\(\s*uit\s*\)/i.test(String(row[tegenstanderIdx] || ''));
+  }
+
+  function addDerdeAutoColumn() {
+    const fruitIdx = findColumnIndex(/fruit/i);
+    const tegenstanderIdx = findColumnIndex(/tegenstander/i);
+    if (fruitIdx === -1 || headers.some(h => /derde\s*auto/i.test(h))) return;
+
+    const insertAt = fruitIdx + 1;
+    headers.splice(insertAt, 0, 'Derde auto');
+    allRows.forEach(row => {
+      while (row.length < insertAt) row.push('');
+      const value = isUitwedstrijd(row, tegenstanderIdx) ? String(row[fruitIdx] || '').trim() : '';
+      row.splice(insertAt, 0, value);
+    });
+  }
+
   function renderMatchCard() {
     const dateColIdx = findDateColumnIndex();
 
@@ -605,6 +625,7 @@
         }
         headers = data[0];
         allRows = data.slice(1);
+        addDerdeAutoColumn();
         sortState = { col: null, dir: 1 };
         loadedAtEl.textContent = 'Geladen: ' + new Date().toLocaleString('nl-NL');
         renderMatchCard();
