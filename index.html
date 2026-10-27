@@ -591,6 +591,17 @@
     const query = filterInput.value.trim().toLowerCase();
     let rows = allRows;
 
+    // Wedstrijden uit het verleden verbergen (rijen zonder herkenbare datum blijven staan)
+    const dateColIdx = findDateColumnIndex();
+    if (dateColIdx !== -1) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      rows = rows.filter(row => {
+        const d = parseDateFlexible(row[dateColIdx]);
+        return !d || d >= today;
+      });
+    }
+
     if (query) {
       rows = rows.filter(row =>
         row.some(cell => String(cell).toLowerCase().includes(query))
